@@ -8,7 +8,9 @@
 #ifndef INCLUDED_SDSL_BITS
 #define INCLUDED_SDSL_BITS
 
+#if defined(__x86_64__) || defined(__i386__)
 #include <immintrin.h> // IWYU pragma: keep
+#endif
 #include <stddef.h>
 #include <stdint.h> // for uint64_t uint32_t declaration
 #ifdef __SSE4_2__
