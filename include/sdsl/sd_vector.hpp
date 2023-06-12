@@ -198,7 +198,7 @@ class sd_vector
         std::pair<size_type, size_type> params = get_params(m_size, m);
         m_wl = params.first;
         m_low = int_vector<>(m, 0, params.first);
-        bit_vector high = bit_vector(params.second, 0); //
+        bit_vector _high = bit_vector(params.second, 0); //
 
         const uint64_t * bvp = bv.data();
         for (size_type i = 0, mm = 0, last_high = 0, highpos = 0; i < (bv.size() + 63) / 64; ++i, ++bvp)
@@ -218,12 +218,12 @@ class sd_vector
                 last_high = cur_high;
                 // (2) handle low part
                 m_low[mm++] = position; // int_vector truncates the most significant logm bits
-                high[highpos++] = 1;    // write 1 for the entry
+                _high[highpos++] = 1;    // write 1 for the entry
                 position += 1;
                 w >>= 1;
             }
         }
-        m_high = std::move(high);
+        m_high = std::move(_high);
         util::init_support(m_high_1_select, &m_high);
         util::init_support(m_high_0_select, &m_high);
     }
@@ -239,7 +239,7 @@ class sd_vector
         std::pair<size_type, size_type> params = get_params(m_size, m);
         m_wl = params.first;
         m_low = int_vector<>(m, 0, params.first);
-        bit_vector high = bit_vector(params.second, 0);
+        bit_vector _high = bit_vector(params.second, 0);
 
         auto itr = begin;
         size_type mm = 0, last_high = 0, highpos = 0;
@@ -252,11 +252,11 @@ class sd_vector
             last_high = cur_high;
             // (2) handle low part
             m_low[mm++] = position; // int_vector truncates the most significant logm bits
-            high[highpos++] = 1;    // write 1 for the entry
+            _high[highpos++] = 1;    // write 1 for the entry
             ++itr;
         }
 
-        m_high = std::move(high);
+        m_high = std::move(_high);
         util::init_support(m_high_1_select, &m_high);
         util::init_support(m_high_0_select, &m_high);
     }
